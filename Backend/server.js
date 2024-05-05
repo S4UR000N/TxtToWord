@@ -3,13 +3,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../Frontend/dist')));
 
 app.get('*', (req, res) => {
-  res.send('404 Not Found');
+  res.send('404 Not A Found');
   // res.sendFile(path.resolve(__dirname, '../Frontend/dist', 'index.html'));
 });
 
