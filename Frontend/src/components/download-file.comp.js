@@ -10,42 +10,110 @@ class DownloadFileComponent extends HTMLElement {
                 font-family: 'Pacifico';
                 src: url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
             }
+            
             :host {
-                display: block;
+                display: flex;
                 padding: 20px;
-                margin: 100px;
-                border: 2px solid #ccc;
+                border: 2px solid #bbded6;
                 border-radius: 4px;
                 background-color: #f9f9f9;
                 font-family: 'Pacifico', cursive;
             }
+
+            #searchBtn {
+                background: #61c0bf;
+                color: white;
+                border: 2px solid #4fa8a7;
+                border-radius: 4px;
+                font: inherit;
+                cursor: pointer;
+                outline: inherit;
+            }
+            #del {
+                background: #cc444b;
+                border: 3px solid #cc444b;
+            }
+            #dwn {
+                background: #31c48d;
+                border: 3px solid #31c48d;
+                
+            }
+            #dwn, #del {
+                color: white;
+                outline: none;
+                font: inherit;
+                border-radius: 3px;
+            }
+
+            input {
+                border: 1px solid #4fa8a7;
+                outline: none;
+                height: 20px;
+            }
+            label {
+                font-size: 20px;
+            }
             .container {
-                display: flex;
-                flex-direction: row;
+                width: 100%;
             }
-            .content-center {
-                justify-content: center;
+            .search-container {
+                width: calc(100% - 100px);
+                padding: 10px;
+                margin: auto 50px;
             }
-            .m-2 {
-                margin: 8px;
+            .dwn-container {
+                float: right;
+                margin: 50px;
             }
-            .ms-0 {
-                margin-left: 0px;
+           
+            @media (max-width: 525px) {
+                :host {
+                    height: 200px;
+                    width: 350px;
+                    margin: 80px auto 10px;
+                }
             }
-        </style>
-        <div class="container content-center">
-            <form>
-                <label>Search files by ID</label>
-                <div class="container m-2 ms-0">
-                    <input type="text" />
-                    <button type="button" id="searchBtn">Search</button>
-                </div>
-                <div class="container">
-                    <button type="button" id="downloadBtn">Download</button>
-                    <button type="button" id="cancelBtn">Cancel</button>
-                </div>
-            </form>
+            @media (min-width:526px) {
+                .search-container {
+                    overflow-x: hidden;
+                }
+                :host {
+                    margin: 35px 100px;
+                }
+            }
+           
+            @media (max-width: 757px) {
+                #searchBtn {
+                    width: calc(100% - 10px);
+                }
+                input {
+                    width: calc(100% - 15px);
+                    margin-top: 10px;
+                }
+                .search-container {
+                    text-align: center;
+                }
+            }
+            @media (min-width: 757px) {
+                .search {
+                    float: right;
+                }
+            }
+    </style>
+
+    <div class="container">
+        <form class="search-container">
+            <label>Search file by ID</label>
+            <div class="search">
+                <input type="text" />
+                <button type="button" id="searchBtn">Search</button>
+            </div>
+        </form>
+        <div class="dwn-container">
+            <button type="button" id="dwn">Download</button>
+            <button type="button" id="del">Cancel</button>
         </div>
+    </div>
         `;
     }
 
