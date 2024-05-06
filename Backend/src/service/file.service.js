@@ -1,3 +1,5 @@
+require("./file.repository");
+
 class FileService {
     repository = new FileRepository();
 
@@ -5,7 +7,15 @@ class FileService {
 
     }
 
+    searchFile(fileId) {
+
+    }
+
     downloadFile(fileId) {
         
+    }
+
+    deleteFile(fileId) {
+
     }
 }

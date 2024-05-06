@@ -2,6 +2,9 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 
+const FileRepository = require('./src/repository/file.repository');
+let fr = new FileRepository();
+
 const app = express();
 const PORT = 3000;
 
@@ -38,9 +41,7 @@ app.post("/api/upload", (req, res) => {
 
 app.get('*', (req, res) => {
   res.send('404 Not Found');
-  // res.sendFile(path.resolve(__dirname, '../Frontend/dist', 'index.html'));
 });
-
 
 app.post("*", (req, res) => {
   res.status(404).json({ error: '404 Not Found' });
