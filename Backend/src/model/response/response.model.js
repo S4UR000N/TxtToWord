@@ -3,3 +3,5 @@ class ResponseModel {
     errors = [];
     result = {};
 }
+
+module.exports = ResponseModel;

@@ -10,24 +10,25 @@ class BaseRepository {
             }
         }
     );
+    db = null;
+    col = null;
 
-    async openConnection() {
+    openConnection(col) {
         try {
-            console.log(`mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}`);
-            // Connect the client to the server (optional starting in v4.7)
-            await this.client.connect();
-
-            // Send a ping to confirm a successful connection
-            await this.client.db("admin").command({ ping: 1 });
-            console.log("Pinged your deployment. You successfully connected to MongoDB!");
+            this.client.connect().then(_ => {
+                this.db = this.client.db(process.env.DB_NAME);
+                this.col = this.db.collection(col);
+            });            
+            console.log("db connection success");
         }
         catch(e) {
+            console.log(e);
             console.log("db connection failure");
         }
-        finally {
-            // Ensures that the client will close when you finish/error
-            await this.client.close();
-        }
+    }
+
+    constructor(col) {
+        this.openConnection();
     }
 }
 

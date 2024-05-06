@@ -3,3 +3,5 @@ class FileModel {
     name = "";
     bytes = "";
 }
+
+module.exports = FileModel;
