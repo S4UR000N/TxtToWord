@@ -5,20 +5,20 @@ class FileRepository extends BaseRepository {
         super('files');
     }
 
-    createFile() {
+    createFile(fileModel) {
 
     }
 
-    readFile() {
+    readFile(fileId) {
 
     }
 
-    updateFile() {
+    updateFile(fileModel) {
 
     }
 
-    deleteFile() {
-        
+    deleteFile(fileId) {
+
     }
 }
 
