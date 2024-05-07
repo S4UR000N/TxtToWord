@@ -65,6 +65,9 @@ class DownloadFileComponent extends HTMLElement {
                 float: right;
                 margin: 50px;
             }
+            .hidden {
+                display: none;
+            }
            
             @media (max-width: 525px) {
                 :host {
@@ -105,26 +108,40 @@ class DownloadFileComponent extends HTMLElement {
         <form class="search-container">
             <label>Search file by ID</label>
             <div class="search">
-                <input type="text" />
-                <button type="button" id="searchBtn">Search</button>
+                <input type="text" id="searchInput" />
+                <button type="button" id="searchBtn" disabled>Search</button>
             </div>
         </form>
-        <div class="dwn-container">
+        <div id="dwn-container" class="dwn-container hidden">
             <button type="button" id="dwn">Download</button>
-            <button type="button" id="del">Cancel</button>
+            <button type="button" id="del">Delete</button>
         </div>
     </div>
         `;
     }
 
     connectedCallback() {
+        this.shadowRoot.getElementById('searchInput').addEventListener('input', (e) => this.handleSearchInput(e));
         this.shadowRoot.getElementById('searchBtn').addEventListener('click', (e) => this.handleSearch(e));
         this.shadowRoot.getElementById('downloadBtn').addEventListener('click', (e) => this.handleDownload(e));
-        this.shadowRoot.getElementById('cancelBtn').addEventListener('click', (e) => this.handleCancel(e));
+        this.shadowRoot.getElementById('deleteBtn').addEventListener('click', (e) => this.handleDelete(e));
     }
 
-    handleSearch(e) {
-        console.log("Handle: Search");
+    handleSearchInput(e) {
+        let searchInput = this.shadowRoot.getElementById('searchInput');
+        let searchBtn = this.shadowRoot.getElementById('searchBtn');
+        if (searchInput.value.length == 24) {
+            searchBtn.removeAttribute('disabled');
+        }
+        else {
+            searchBtn.setAttribute('disabled', true);
+        }
+    }
+    async handleSearch(e) {
+        // this.shadowRoot.getElementById('dwn-container').classList.toggle('hidden');
+        let res = await fetch('http://localhost:3000/api/search/' + this.shadowRoot.getElementById('searchInput').value);
+        let resData = await res.json();
+        console.log("Handle: Search" + resData);
         console.log(e);
     }
 
@@ -133,8 +150,8 @@ class DownloadFileComponent extends HTMLElement {
         console.log(e);
     }
 
-    handleCancel(e) {
-        console.log("Handle: Cancel");
+    handleDelete(e) {
+        console.log("Handle: Delete");
         console.log(e);
     }
 }
