@@ -137,7 +137,7 @@ class DownloadFileComponent extends HTMLElement {
     handleSearchInput(e) {
         let searchInput = this.shadowRoot.getElementById('searchInput');
         let searchBtn = this.shadowRoot.getElementById('searchBtn');
-        if (searchInput.length == 24) {
+        if (searchInput.value.length == 24) {
             searchBtn.removeAttribute('disabled');
         }
         else {
