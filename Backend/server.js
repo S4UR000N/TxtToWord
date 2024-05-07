@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'path';
 import bodyParser from 'body-parser';
+import multer from 'multer';
 
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -10,6 +11,8 @@ import FileService from './src/service/file.service.js';
 // fileService.searchFile(1);
 
 const app = express();
+const upload = multer();
+
 const PORT = 3000;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -38,14 +41,20 @@ app.get('/api/download/:fileId', (req, res) => {
   // res.send(file.data);
 });
 
-app.post('/api/upload', (req, res) => {
-  let formData = req.body;
+app.post('/api/upload', upload.single('file'), async (req, res) => {
+  let file = req.file;
 
-  if(true) {
-    res.status(200).json(formData);
-  } else {
-    res.status(400).json(formData);
-  }  
+  if(!file) {
+    return res.status(400).json({ error: 'No file uploaded' });
+  } 
+
+  try {
+    await FileService.uploadFile(file);
+    res.json({ message: 'File uploaded and converted to .docx' });
+  } catch(error) {
+    console.error('Error processing file:', error);
+    res.status(500).json({ error: 'Error processing a file' });
+  }
 });
 
 app.get('*', (req, res) => {
