@@ -19,6 +19,7 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../Frontend/dist')));
 
 app.get('/api/search/:fileId', (req, res) => {
+  let fileRepo = new FileRepository();
   let resData = { fileId: req.params.fileId, fileExists: true };
   res.status(200).json(resData);
 });

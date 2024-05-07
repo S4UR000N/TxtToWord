@@ -70,6 +70,11 @@ class DownloadFileComponent extends HTMLElement {
             .hidden {
                 display: none;
             }
+
+            #searchBtn:disabled {
+                background-color: #e3e3e3;
+                border: 2px solid #bbded6;
+            }
            
             @media (max-width: 525px) {
                 :host {
