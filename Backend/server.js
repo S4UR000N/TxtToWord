@@ -13,6 +13,11 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../Frontend/dist')));
 
+app.get('/api/search/:fileId', (req, res) => {
+  let resData = { fileId: req.params.fileId, fileExists: true };
+  res.status(200).json(resData);
+});
+
 app.get('/api/download/:fileId', (req, res) => {
   let data = req.params.fileId;
 

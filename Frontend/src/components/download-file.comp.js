@@ -142,8 +142,9 @@ class DownloadFileComponent extends HTMLElement {
         // this.shadowRoot.getElementById('dwn-container').classList.toggle('hidden');
         let res = await fetch('http://localhost:3000/api/search/' + this.shadowRoot.getElementById('searchInput').value);
         let resData = await res.json();
-        console.log("Handle: Search" + resData);
-        console.log(e);
+        console.log("Handle: Search");
+        console.log(resData);
+        console.log(resData.fileId);
     }
 
     handleDownload(e) {
