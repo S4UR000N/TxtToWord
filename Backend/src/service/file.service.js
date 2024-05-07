@@ -1,14 +1,14 @@
-require("./file.repository");
+const FileRepository = require("../repository/file.repository");
 
 class FileService {
-    repository = new FileRepository();
+    fileRepository = new FileRepository();
 
     uploadFile(fileModel) {
 
     }
 
     searchFile(fileId) {
-
+        this.fileRepository.readFile();
     }
 
     downloadFile(fileId) {
@@ -19,3 +19,5 @@ class FileService {
 
     }
 }
+
+module.exports = FileService;

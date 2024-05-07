@@ -3,6 +3,7 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const logger = require('../service/logger.service');
 
 class BaseRepository {
+    logger = logger;
     client = new MongoClient(`mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}`,  {
             serverApi: {
                 version: ServerApiVersion.v1,
@@ -11,24 +12,25 @@ class BaseRepository {
             }
         }
     );
-    db = null;
-    col = null;
+    db;
+    col;
+    con;
 
-    openConnection(col) {
-        this.client.connect()
-        .then(_ => {
+    async openConnection(col) {
+        try {
+            await this.client.connect()
             this.db = this.client.db(process.env.DB_NAME);
             this.col = this.db.collection(col);
-            logger.info("db connection success");
-
-        })
-        .catch(e => {             
-            logger.error("db connection failure\n" + e);
-        });
+            console.log(col);
+            this.logger.info("db connection success");
+        }
+        catch (e) {
+            this.logger.error("db connection failure\n" + e);
+        }
     }
 
     constructor(col) {
-        this.openConnection(col);
+        this.con = this.openConnection(col);
     }
 }
 

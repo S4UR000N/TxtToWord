@@ -1,5 +1,7 @@
+const { ObjectId } = require('mongodb')
+
 class FileModel {
-    id = "";
+    _id = new ObjectId();
     name = "";
     bytes = "";
 }

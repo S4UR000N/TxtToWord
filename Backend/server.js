@@ -1,9 +1,7 @@
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
-
-const FileRepository = require('./src/repository/file.repository');
-let fr = new FileRepository();
+const FileService = require('./src/service/file.service');
 
 const app = express();
 const PORT = 3000;
@@ -11,7 +9,7 @@ const PORT = 3000;
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../Frontend/dist')));
 
-app.get("/api/download/:fileId", (req, res) => {
+app.get("/api/download/:fileId", async (req, res) => {
   let data = req.params.fileId;
 
   if(true)
@@ -28,9 +26,8 @@ app.get("/api/download/:fileId", (req, res) => {
   // res.send(file.data);
 });
 
-app.post("/api/upload", (req, res) => {
+app.post("/api/upload", async (req, res) => {
   let formData = req.body;
-
   if(true)
   {
       res.status(200).json(formData);
