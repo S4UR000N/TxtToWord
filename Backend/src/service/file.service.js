@@ -1,7 +1,7 @@
 import FileRepository from '../repository/file.repository.js';
 
 class FileService {
-    repository = new FileRepository();
+    fileRepository = new FileRepository();
 
     uploadFile(fileModel) {
         this.repository.createFile(fileModel);
