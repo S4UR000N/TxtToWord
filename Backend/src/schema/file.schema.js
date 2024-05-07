@@ -1,6 +1,6 @@
 const FileSchema = {
     name: String,
-    bytes: String,
+    bytes: Buffer,
 }
 
 export default FileSchema;

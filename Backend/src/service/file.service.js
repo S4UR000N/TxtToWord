@@ -16,13 +16,9 @@ class FileService {
         this.repository.createFile(fileModel);
     }
 
-    searchFile(fileId) {
-        // this.repository.readFile(fileId);
-        this.fileRepository.readFile('663979f073beb50bbed7592f');
-    }
-
-    downloadFile(fileId) {
-        
+    async searchFile(fileId) {
+        const data = await this.fileRepository.readFile(fileId);
+        return data;
     }
 
     deleteFile(fileId) {
