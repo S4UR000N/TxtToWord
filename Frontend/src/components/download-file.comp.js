@@ -130,8 +130,8 @@ class DownloadFileComponent extends HTMLElement {
     connectedCallback() {
         this.shadowRoot.getElementById('searchInput').addEventListener('input', (e) => this.handleSearchInput(e));
         this.shadowRoot.getElementById('searchBtn').addEventListener('click', (e) => this.handleSearch(e));
-        this.shadowRoot.getElementById('downloadBtn').addEventListener('click', (e) => this.handleDownload(e));
-        this.shadowRoot.getElementById('deleteBtn').addEventListener('click', (e) => this.handleDelete(e));
+        this.shadowRoot.getElementById('dwn').addEventListener('click', (e) => this.handleDownload(e));
+        this.shadowRoot.getElementById('del').addEventListener('click', (e) => this.handleDelete(e));
     }
 
     handleSearchInput(e) {
