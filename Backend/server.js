@@ -5,7 +5,9 @@ import bodyParser from 'body-parser';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
-import FileRepository from './src/repository/file.repository.js';
+import FileService from './src/service/file.service.js';
+// let fileService = new FileService();
+// fileService.searchFile(1);
 
 const app = express();
 const PORT = 3000;
@@ -16,7 +18,6 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../Frontend/dist')));
 
 app.get('/api/search/:fileId', (req, res) => {
-  let fileRepo = new FileRepository();
   let resData = { fileId: req.params.fileId, fileExists: true };
   res.status(200).json(resData);
 });

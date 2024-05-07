@@ -1,11 +1,9 @@
 import BaseRepository from './base.repository.js';
 import FileSchema from '../schema/file.schema.js';
-import mongoose from 'mongoose';
 
 class FileRepository extends BaseRepository {
     constructor() {
-        const fs = new mongoose.Schema(FileSchema);
-        super('File', fs);
+        super('File', FileSchema);
     }
 
     async createFile(fileModel) {
@@ -19,7 +17,8 @@ class FileRepository extends BaseRepository {
     }
 
     async deleteFile(fileId) {
-        const file = await this.collection.deleteOne({id: fileId});
+        const file = await this.collection.deleteOne({ _id: fileId });
+        console.log(file);
     }
 }
 
