@@ -1,9 +1,6 @@
-const { ObjectId } = require('mongodb')
-
 class FileModel {
-    _id = new ObjectId();
-    name = "";
-    bytes = "";
+    name = '';
+    bytes = '';
 }
 
-module.exports = FileModel;
+export default FileModel;

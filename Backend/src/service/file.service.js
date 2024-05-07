@@ -1,14 +1,13 @@
-const FileRepository = require("../repository/file.repository");
+import FileRepository from '../repository/file.repository.js';
 
 class FileService {
     fileRepository = new FileRepository();
 
     uploadFile(fileModel) {
-
+        this.repository.createFile(fileModel);
     }
-
     searchFile(fileId) {
-        this.fileRepository.readFile();
+        this.repository.readFile(fileId);
     }
 
     downloadFile(fileId) {
@@ -16,8 +15,8 @@ class FileService {
     }
 
     deleteFile(fileId) {
-
+        this.repository.deleteFile(fileId);
     }
 }
 
-module.exports = FileService;
+export default FileService;

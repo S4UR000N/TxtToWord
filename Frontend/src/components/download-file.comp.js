@@ -43,6 +43,7 @@ class DownloadFileComponent extends HTMLElement {
                 outline: none;
                 font: inherit;
                 border-radius: 3px;
+                cursor: pointer;
             }
 
             input {

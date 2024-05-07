@@ -1,42 +1,26 @@
-const BaseRepository = require("./base.repository");
-const FileModel = require("../model/entity/file.model");
-const { ObjectId } = require('mongodb')
+import BaseRepository from './base.repository.js';
+import FileSchema from '../schema/file.schema.js';
+import mongoose from 'mongoose';
 
 class FileRepository extends BaseRepository {
     constructor() {
-        super('files');
+        const fs = new mongoose.Schema(FileSchema);
+        super('File', fs);
     }
 
     async createFile(fileModel) {
-        await this.con;
-        let fm = new FileModel();
-        fm.name = "test name";
-        fm.bytes = "123123123123"
-
-        this.col.insertOne(fm)
-        .then(res => {
-            this.logger.info("file insert success");
-            return res;
-        })
-        .catch(e => {             
-            this.logger.error("file insert failure\n" + e);
-        });
+        const file = await this.collection.create(fileModel);
+        console.log(file._id);
     }
 
     async readFile(fileId) {
-        await this.con;
-        const query = { _id: new ObjectId("663979f073beb50bbed7592f") };
-        const file = await this.col.findOne(query);
+        const file = await this.collection.findById(fileId).exec();
         console.log(file);
     }
 
-    async updateFile(fileModel) {
-
-    }
-
     async deleteFile(fileId) {
-
+        const file = await this.collection.deleteOne({id: fileId});
     }
 }
 
-module.exports = FileRepository;
+export default FileRepository;

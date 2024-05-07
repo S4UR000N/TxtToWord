@@ -1,22 +1,25 @@
-const path = require('path');
-const express = require('express');
-const bodyParser = require('body-parser');
-const FileService = require('./src/service/file.service');
+import express from 'express';
+import path from 'path';
+import bodyParser from 'body-parser';
+
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
 
 const app = express();
 const PORT = 3000;
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../Frontend/dist')));
 
-app.get("/api/download/:fileId", async (req, res) => {
+app.get('/api/download/:fileId', (req, res) => {
   let data = req.params.fileId;
 
-  if(true)
-  {
-      res.status(200).json(formData);
+  if(true) {
+    res.status(200).json(formData);
   } else {
-      res.status(400).json(formData);
+    res.status(400).json(formData);
   }
 
   // res.set({
@@ -26,13 +29,13 @@ app.get("/api/download/:fileId", async (req, res) => {
   // res.send(file.data);
 });
 
-app.post("/api/upload", async (req, res) => {
+app.post('/api/upload', (req, res) => {
   let formData = req.body;
-  if(true)
-  {
-      res.status(200).json(formData);
+
+  if(true) {
+    res.status(200).json(formData);
   } else {
-      res.status(400).json(formData);
+    res.status(400).json(formData);
   }  
 });
 
@@ -40,7 +43,7 @@ app.get('*', (req, res) => {
   res.send('404 Not Found');
 });
 
-app.post("*", (req, res) => {
+app.post('*', (req, res) => {
   res.status(404).json({ error: '404 Not Found' });
 });
 
