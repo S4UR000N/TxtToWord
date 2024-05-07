@@ -73,9 +73,31 @@ class UploadFileComponent extends HTMLElement {
             <button id="uploadBtn" class='btn' disabled>Upload a file</button>
         </div>
         `;
+        this.enableFileDragAndDrop();
     }
 
+    enableFileDragAndDrop() {
+        const hostElement = this.shadowRoot.host;
     
+        hostElement.addEventListener('dragover', (event) => {
+          event.preventDefault();
+        });
+    
+        hostElement.addEventListener('drop', (event) => {
+          event.preventDefault();
+          
+          const files = event.dataTransfer.files;
+    
+          if (files.length === 1) {
+            const file = files[0];
+            console.log('Dropped file:', file);
+          } else {
+            console.log('Please drop only one file');
+          }
+        });
+      }
+    
+
     connectedCallback() {
         window.addEventListener("dragover", (e) => e.preventDefault());
         window.addEventListener("drop", (e) => e.preventDefault());
