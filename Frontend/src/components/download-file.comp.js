@@ -109,21 +109,21 @@ class DownloadFileComponent extends HTMLElement {
                     float: right;
                 }
             }
-    </style>
+        </style>
 
-    <div class="container">
-        <form class="search-container">
-            <label>Search file by ID</label>
-            <div class="search">
-                <input type="text" id="searchInput" />
-                <button type="button" id="searchBtn" disabled>Search</button>
+        <div class="container">
+            <form class="search-container">
+                <label>Search file by ID</label>
+                <div class="search">
+                    <input type="text" id="searchInput" />
+                    <button type="button" id="searchBtn" disabled>Search</button>
+                </div>
+            </form>
+            <div id="dwn-container" class="dwn-container hidden">
+                <button type="button" id="dwn">Download</button>
+                <button type="button" id="del">Delete</button>
             </div>
-        </form>
-        <div id="dwn-container" class="dwn-container hidden">
-            <button type="button" id="dwn">Download</button>
-            <button type="button" id="del">Delete</button>
         </div>
-    </div>
         `;
     }
 

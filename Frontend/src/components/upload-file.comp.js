@@ -24,6 +24,11 @@ class UploadFileComponent extends HTMLElement {
                 cursor: pointer;
                 outline: inherit;
             }
+
+            #uploadBtn:disabled {
+                background-color: #e3e3e3;
+                border: 2px solid #bbded6;
+            }
             
             @media (max-width:525px) {
             .container {
@@ -63,12 +68,49 @@ class UploadFileComponent extends HTMLElement {
                 }
             }
         </style>
-        <div class='container'> 
+        <div id="dropZone" class='container'> 
             <p>Drag and drop your .txt file</p>
-            <button class='btn'>Upload a file</button>
+            <button id="uploadBtn" class='btn' disabled>Upload a file</button>
         </div>
         `;
     }
+
+    
+    connectedCallback() {
+        window.addEventListener("dragover", (e) => e.preventDefault());
+        window.addEventListener("drop", (e) => e.preventDefault());
+        this.shadowRoot.getElementById('dropZone').addEventListener('dragover', (e) => this.handleDragover(e));
+        this.shadowRoot.getElementById('dropZone').addEventListener('drop', (e) => this.handleDrop(e));
+    }
+
+    handleDragover(e) {
+        e.preventDefault();
+        let dropZone = this.shadowRoot.getElementById('dropZone');
+    }
+    
+    handleDrop(e) {
+        e.preventDefault();
+        this.shadowRoot.getElementById('uploadBtn').removeAttribute('disabled');
+
+        console.log("File(s) dropped");
+
+        if (e.dataTransfer.items) {
+            [...e.dataTransfer.items].forEach((item, i) => {
+                if (item.kind === "file") {
+                    const file = item.getAsFile();
+                    console.log(`… file[${i}].name = ${file.name}`);
+                }
+            });
+        }
+        else {
+            [...e.dataTransfer.files].forEach((file, i) => {
+                console.log(`… file[${i}].name = ${file.name}`);
+            });
+        }
+    }
+
+
 }
+
 
 customElements.define('upload-component', UploadFileComponent);
