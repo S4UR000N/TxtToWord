@@ -1,35 +1,22 @@
-require('dotenv').config();
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const logger = require('../service/logger.service');
+import {} from 'dotenv/config'
+import { MongoClient, ServerApiVersion } from 'mongodb';
+//import logger from '../service/logger.service.js';
+import mongoose from 'mongoose';
 
 class BaseRepository {
-    client = new MongoClient(`mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}`,  {
-            serverApi: {
-                version: ServerApiVersion.v1,
-                strict: true,
-                deprecationErrors: true,
-            }
+    
+    static async connectToDb() {
+        try {
+            await mongoose.connect(`mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`);
+            console.log('Successfully connected to db');
+        } catch (error) {
+            console.error(error);
         }
-    );
-    db = null;
-    col = null;
-
-    openConnection(col) {
-        this.client.connect()
-        .then(_ => {
-            this.db = this.client.db(process.env.DB_NAME);
-            this.col = this.db.collection(col);
-            logger.info("db connection success");
-
-        })
-        .catch(e => {             
-            logger.error("db connection failure\n" + e);
-        });
     }
 
-    constructor(col) {
-        this.openConnection(col);
+    constructor(col, schema) {
+        this.collection = mongoose.model(col, schema);
     }
 }
 
-module.exports = BaseRepository;
+export default BaseRepository;

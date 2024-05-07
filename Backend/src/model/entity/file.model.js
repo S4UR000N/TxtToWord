@@ -1,7 +1,6 @@
 class FileModel {
-    id = "";
-    name = "";
-    bytes = "";
+    name = '';
+    bytes = '';
 }
 
-module.exports = FileModel;
+export default FileModel;

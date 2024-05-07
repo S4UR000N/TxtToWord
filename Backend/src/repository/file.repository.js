@@ -1,25 +1,26 @@
-const BaseRepository = require("./base.repository");
+import BaseRepository from './base.repository.js';
+import FileSchema from '../schema/file.schema.js';
+import mongoose from 'mongoose';
 
 class FileRepository extends BaseRepository {
     constructor() {
-        super('files');
+        const fs = new mongoose.Schema(FileSchema);
+        super('File', fs);
     }
 
-    createFile(fileModel) {
-
+    async createFile(fileModel) {
+        const file = await this.collection.create(fileModel);
+        console.log(file._id);
     }
 
-    readFile(fileId) {
-
+    async readFile(fileId) {
+        const file = await this.collection.findById(fileId).exec();
+        console.log(file);
     }
 
-    updateFile(fileModel) {
-
-    }
-
-    deleteFile(fileId) {
-
+    async deleteFile(fileId) {
+        const file = await this.collection.deleteOne({id: fileId});
     }
 }
 
-module.exports = FileRepository;
+export default FileRepository;
