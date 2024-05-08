@@ -16,7 +16,7 @@ class BaseRepository {
             });
         }
 
-        this.collection = mongoose.model(col, new mongoose.Schema(schema));
+        this.collection = mongoose.connection.models[col] ? mongoose.model(col) : mongoose.model(col, new mongoose.Schema(schema));
     }
 }
 

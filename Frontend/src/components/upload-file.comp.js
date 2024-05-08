@@ -14,11 +14,12 @@ class UploadFileComponent extends HTMLElement {
                 font-size: 20px;
             }
             .btn {
+                display: block;
                 background: #61c0bf;
                 color: white;
                 border: 2px solid #4fa8a7;
                 border-radius: 4px;
-                margin-top: 24px;
+                margin-top: 50px;
                 padding: 4px;
                 font: inherit;
                 cursor: pointer;
@@ -31,18 +32,21 @@ class UploadFileComponent extends HTMLElement {
             }
             
             @media (max-width:525px) {
-            .container {
-                border-radius: 8px;
-                border: 2px solid #61c0bf;
-                text-align: center;
-                margin: 80px auto 30px;
-                position: center;
-                background: #e3e3e3; 
-                padding: 20px;
-                height: 100px;
-                width: 350px;
-                color:  #61c0bf;
-            }
+                .container {
+                    border-radius: 8px;
+                    border: 2px solid #61c0bf;
+                    text-align: center;
+                    margin: 80px auto 30px;
+                    position: center;
+                    background: #e3e3e3; 
+                    padding: 20px;
+                    height: 100px;
+                    width: 350px;
+                    color:  #61c0bf;
+                }
+                .btn {
+                    display: inline;
+                }
             }
             @media (min-width:526px){
                 :host {
@@ -144,6 +148,10 @@ class UploadFileComponent extends HTMLElement {
                 });
             }
         }
+    }
+
+    upload(file) {
+
     }
 }
 
