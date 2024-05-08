@@ -75,11 +75,18 @@ class UploadFileComponent extends HTMLElement {
             .hidden {
                 display: none;
             }
+            #fileIdContainer {
+                text-align: center;
+            }
+            #fileId {
+                margin-top: 10px;
+            }
         </style>
         <div id="dropZone" class='container'> 
             <p>Drag and drop your .txt file</p>
             <label class='btn' for="fileInput">Upload a file</label>
             <input type="file" id="fileInput" accept="text/plain" class="hidden" />
+            <div id="fileIdContainer" class="hidden">Your file id is: <span id="fileId"></span></div>
         </div>
         `;
     }
@@ -146,7 +153,9 @@ class UploadFileComponent extends HTMLElement {
                 body: formData
             })
             .then(res => res.json().then(data => {
-                alert(`${data.message}\nYour file ID is: ${data.fileId}`)
+                alert(`${data.message}`)
+                this.shadowRoot.getElementById('fileId').innerText = data.fileId;
+                this.shadowRoot.getElementById('fileIdContainer').classList.remove('hidden');
             }))
             .catch(_ => {
                 alert('Upload failed. Please try again.')

@@ -1,5 +1,6 @@
 class DownloadFileComponent extends HTMLElement {
     constructor() {
+        fileId = '';
         super();
 
         this.attachShadow({ mode: 'open' });
@@ -121,7 +122,7 @@ class DownloadFileComponent extends HTMLElement {
             </form>
             <div id="dwn-container" class="dwn-container hidden">
                 <span id="fileName">the file name.docx</span>
-                <button type="button" id="dwn">Download</button>
+                <a id="dwnLink" download><button type="button" id="dwn">Download</button></a>
                 <button type="button" id="del">Delete</button>
             </div>
         </div>
@@ -131,7 +132,7 @@ class DownloadFileComponent extends HTMLElement {
     connectedCallback() {
         this.shadowRoot.getElementById('searchInput').addEventListener('input', (e) => this.handleSearchInput(e));
         this.shadowRoot.getElementById('searchBtn').addEventListener('click', (e) => this.handleSearch(e));
-        this.shadowRoot.getElementById('dwn').addEventListener('click', (e) => this.handleDownload(e));
+        // this.shadowRoot.getElementById('dwn').addEventListener('click', (e) => this.handleDownload(e));
         this.shadowRoot.getElementById('del').addEventListener('click', (e) => this.handleDelete(e));
     }
 
@@ -150,17 +151,33 @@ class DownloadFileComponent extends HTMLElement {
         fetch('http://localhost:3000/api/search/' + this.shadowRoot.getElementById('searchInput').value)
         .then(res => res.json().then(file => {
             console.log(file);
+            this.fileId = file._id;
+            console.log(this.fileId);
+            console.log(this.fileId);
+
+            console.log(this.fileId);
+            console.log(this.fileId);
+            console.log(this.fileId);
+            console.log(this.fileId);
+            console.log(this.fileId);
+
             this.shadowRoot.getElementById('fileName').innerText = file.name;
+            this.shadowRoot.getElementById('dwnLink').setAttribute('href', `http://localhost:3000/api/download/${this.fileId}`)
             this.shadowRoot.getElementById('dwn-container').classList.toggle('hidden');
         }))
         .catch(_ => {
-            alert('Search failed. Please try again.')
+            alert('Search failed. Please try again.');
         });
     }
 
     handleDownload(e) {
-        console.log("Handle: Download");
-        console.log(e);
+        fetch('http://localhost:3000/api/download/' + this.fileId)
+        .then(res => {
+            return res;
+        })
+        .catch(_ => {
+            alert('Search failed. Please try again.');
+        });
     }
 
     handleDelete(e) {
