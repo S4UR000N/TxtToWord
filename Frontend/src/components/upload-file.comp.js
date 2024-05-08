@@ -97,7 +97,6 @@ class UploadFileComponent extends HTMLElement {
         });
       }
     
-
     connectedCallback() {
         window.addEventListener("dragover", (e) => e.preventDefault());
         window.addEventListener("drop", (e) => e.preventDefault());
@@ -130,9 +129,6 @@ class UploadFileComponent extends HTMLElement {
             });
         }
     }
-
-
 }
-
 
 customElements.define('upload-component', UploadFileComponent);
