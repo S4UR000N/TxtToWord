@@ -50,6 +50,7 @@ app.get('/api/download/:fileId', (req, res) => {
 
 app.post('/api/upload', upload.single('file'), async (req, res) => {
     let file = req.file;
+    console.log(file);
     if(!file) {
         return res.status(400).json({ error: 'No file uploaded' });
     } 
