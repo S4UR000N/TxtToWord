@@ -65,8 +65,11 @@ class DownloadFileComponent extends HTMLElement {
                 margin: auto 50px;
             }
             .dwn-container {
-                float: right;
+                width: calc(100% - 80px);
                 margin: 50px;
+            }
+            .buttonsContainer {
+                float: right;
             }
             .hidden {
                 display: none;
@@ -122,8 +125,10 @@ class DownloadFileComponent extends HTMLElement {
             </form>
             <div id="dwn-container" class="dwn-container hidden">
                 <span id="fileName">the file name.docx</span>
-                <a id="dwnLink" download><button type="button" id="dwn">Download</button></a>
-                <button type="button" id="del">Delete</button>
+                <div class="buttonsContainer">
+                    <a id="dwnLink" download><button type="button" id="dwn">Download</button></a>
+                    <button type="button" id="del">Delete</button>
+                </div>
             </div>
         </div>
         `;
