@@ -19,7 +19,7 @@ class UploadFileComponent extends HTMLElement {
                 color: white;
                 border: 2px solid #4fa8a7;
                 border-radius: 4px;
-                margin-top: 50px;
+                margin-top: 44px;
                 padding: 4px;
                 font: inherit;
                 cursor: pointer;
@@ -45,7 +45,8 @@ class UploadFileComponent extends HTMLElement {
                     color:  #61c0bf;
                 }
                 .btn {
-                    display: inline;
+                    display: inline-block;
+                    margin-top: 15px;
                 }
             }
             @media (min-width:526px){
