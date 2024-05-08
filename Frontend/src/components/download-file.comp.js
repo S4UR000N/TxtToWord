@@ -132,7 +132,6 @@ class DownloadFileComponent extends HTMLElement {
     connectedCallback() {
         this.shadowRoot.getElementById('searchInput').addEventListener('input', (e) => this.handleSearchInput(e));
         this.shadowRoot.getElementById('searchBtn').addEventListener('click', (e) => this.handleSearch(e));
-        // this.shadowRoot.getElementById('dwn').addEventListener('click', (e) => this.handleDownload(e));
         this.shadowRoot.getElementById('del').addEventListener('click', (e) => this.handleDelete(e));
     }
 
@@ -152,14 +151,6 @@ class DownloadFileComponent extends HTMLElement {
         .then(res => res.json().then(file => {
             console.log(file);
             this.fileId = file._id;
-            console.log(this.fileId);
-            console.log(this.fileId);
-
-            console.log(this.fileId);
-            console.log(this.fileId);
-            console.log(this.fileId);
-            console.log(this.fileId);
-            console.log(this.fileId);
 
             this.shadowRoot.getElementById('fileName').innerText = file.name;
             this.shadowRoot.getElementById('dwnLink').setAttribute('href', `http://localhost:3000/api/download/${this.fileId}`)
@@ -170,19 +161,19 @@ class DownloadFileComponent extends HTMLElement {
         });
     }
 
-    handleDownload(e) {
-        fetch('http://localhost:3000/api/download/' + this.fileId)
+    handleDelete(e) {
+        fetch('http://localhost:3000/api/delete/' + this.fileId, {method: 'DELETE'})
         .then(res => {
-            return res;
+            if (res.ok) {
+                alert('Delete Successful.')
+            }
+            else {
+                alert('Delete failed. Please try again.')
+            }
         })
         .catch(_ => {
-            alert('Search failed. Please try again.');
+            alert('Delete failed. Please try again.');
         });
-    }
-
-    handleDelete(e) {
-        console.log("Handle: Delete");
-        console.log(e);
     }
 }
 
