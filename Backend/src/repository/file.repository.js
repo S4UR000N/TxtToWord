@@ -3,22 +3,21 @@ import FileSchema from '../schema/file.schema.js';
 
 class FileRepository extends BaseRepository {
     constructor() {
-        super('File', FileSchema);
+        super('file', FileSchema);
     }
 
     async createFile(fileModel) {
         const file = await this.collection.create(fileModel);
-        console.log(file._id);
+        return file._id;
     }
 
     async readFile(fileId) {
         const file = await this.collection.findById(fileId).exec();
-        console.log(file);
+        return file;
     }
 
     async deleteFile(fileId) {
         const file = await this.collection.deleteOne({ _id: fileId });
-        console.log(file);
     }
 }
 
