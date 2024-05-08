@@ -64,6 +64,20 @@ app.post('/api/upload', upload.single('file'), async (req, res) => {
     }
 });
 
+app.delete('/api/delete/:fileId', async (req, res) => {
+    let fileService = new FileService();
+    let id = req.params.fileId;
+    try {
+        const file = await fileService.deleteFile(id);
+        if(!file) {
+            return res.status(404).json({ error: 'File not found' });
+        }
+        res.status(200).send();
+    } catch(error) {
+        res.status(500).json({ error: 'Error while deleting a file' });
+    }
+});
+
 app.get('*', (req, res) => {
   res.send('404 Not Found');
 });

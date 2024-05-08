@@ -18,6 +18,7 @@ class FileRepository extends BaseRepository {
 
     async deleteFile(fileId) {
         const file = await this.collection.deleteOne({ _id: fileId });
+        return file;
     }
 }
 

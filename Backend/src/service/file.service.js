@@ -20,8 +20,12 @@ class FileService {
         return data;
     }
 
-    deleteFile(fileId) {
-        this.fileRepository.deleteFile(fileId);
+    async deleteFile(fileId) {
+        const result = await this.fileRepository.deleteFile(fileId);
+        if (result.deletedCount > 0) {
+            return true;
+        }
+        return false;
     }
 }
 
