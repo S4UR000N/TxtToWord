@@ -78,7 +78,7 @@ class UploadFileComponent extends HTMLElement {
         </style>
         <div id="dropZone" class='container'> 
             <p>Drag and drop your .txt file</p>
-            <label class='btn' for="fileInput">Upload a file.</label>
+            <label class='btn' for="fileInput">Upload a file</label>
             <input type="file" id="fileInput" accept="text/plain" class="hidden" />
         </div>
         `;
@@ -106,10 +106,11 @@ class UploadFileComponent extends HTMLElement {
       }
     
     connectedCallback() {
-        window.addEventListener("dragover", (e) => e.preventDefault());
-        window.addEventListener("drop", (e) => e.preventDefault());
+        window.addEventListener('dragover', (e) => e.preventDefault());
+        window.addEventListener('drop', (e) => e.preventDefault());
         this.shadowRoot.host.addEventListener('dragover', (e) => this.handleDragover(e));
         this.shadowRoot.host.addEventListener('drop', (e) => this.handleDrop(e));
+        this.shadowRoot.getElementById('fileInput').addEventListener('change', (e) => this.handleUpload(e.target.files[0]))
     }
 
     handleDragover(e) {
@@ -120,39 +121,37 @@ class UploadFileComponent extends HTMLElement {
         e.preventDefault();
         const files = e.dataTransfer.files;
         if (files.length > 0) {
-            let file = files[0];
             if (files.length > 1) {
                 alert('Please select only one text file');
             }
-            else if (file.type !== 'text/plain') {
-                alert('The file must be text/plain');
-            }
-            else if (file.size > 5242880) {
-                alert('The file must be 5MB or less');
-            }
             else {
-                console.log(file);
-                console.log("fetch init");
-                const formData = new FormData();
-                formData.append('file', file);
-                fetch('http://localhost:3000/api/upload', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(res => {
-                    console.log(res);
-                    console.log("upload success");
-                })
-                .catch(err => {
-                    console.log(err);
-                    alert('Upload failed. Please try again.')
-                });
+                this.handleUpload(files[0]);
             }
         }
     }
 
-    upload(file) {
-
+    handleUpload(file) {
+        console.log(file);
+        if (file.type !== 'text/plain') {
+            alert('The file must be text/plain');
+        }
+        else if (file.size > 5242880) {
+            alert('The file must be 5MB or less');
+        }
+        else {
+            const formData = new FormData();
+            formData.append('file', file);
+            fetch('http://localhost:3000/api/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json().then(data => {
+                alert(`${data.message}\nYour file ID is: ${data.fileId}`)
+            }))
+            .catch(_ => {
+                alert('Upload failed. Please try again.')
+            });
+        }
     }
 }
 
