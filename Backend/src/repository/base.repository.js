@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 class BaseRepository {
     static hasConnected = false;
 
-    constructor(col, schema) {
+    constructor() {
         if (!BaseRepository.hasConnected) {
             mongoose.connect(`mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`)
             .then(_ => {
@@ -15,8 +15,6 @@ class BaseRepository {
                 logger.error('db connection failed\n' + err);
             });
         }
-
-        this.collection = mongoose.model(col, new mongoose.Schema(schema));
     }
 }
 

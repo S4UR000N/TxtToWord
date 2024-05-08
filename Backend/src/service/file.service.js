@@ -1,19 +1,18 @@
 import FileRepository from '../repository/file.repository.js';
 import FileModel from '../model/entity/file.model.js';
-import mammoth from 'mammoth';
+import HTMLtoDOCX from 'html-to-docx';
 
 class FileService {
     fileRepository = new FileRepository();
 
-    async uploadFile(file) {
-        const options = { transformDocument: mammoth.transforms.docx()};
-
-        const docxData = await mammoth.convertText({ buffer: file.buffer }, options);
-        const binaryData = new Binary(docxData);
-        
-        let fileModel = new FileModel(file.name, binaryData);
-
-        this.repository.createFile(fileModel);
+    async uploadFile(fileName, buffer) {
+        const htmlData = buffer.toString();
+        const docxBuffer = await HTMLtoDOCX(htmlData);
+        let fileModel = new FileModel();
+        fileModel.name = fileName.split('.')[0] + '.docx';
+        fileModel.bytes = docxBuffer;
+        let savedFileId = await this.fileRepository.createFile(fileModel);
+        return savedFileId;
     }
 
     async searchFile(fileId) {
@@ -22,7 +21,7 @@ class FileService {
     }
 
     deleteFile(fileId) {
-        this.repository.deleteFile(fileId);
+        this.fileRepository.deleteFile(fileId);
     }
 }
 

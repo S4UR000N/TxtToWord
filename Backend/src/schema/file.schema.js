@@ -1,6 +1,10 @@
+import mongoose from "mongoose";
+
 const FileSchema = {
     name: String,
     bytes: Buffer,
 }
 
-export default FileSchema;
+const collection = mongoose.model('File', FileSchema);
+
+export default collection;
