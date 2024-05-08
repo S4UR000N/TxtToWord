@@ -49,13 +49,14 @@ app.get('/api/download/:fileId', (req, res) => {
 });
 
 app.post('/api/upload', upload.single('file'), async (req, res) => {
+    let fileService = new FileService();
     let file = req.file;
     console.log(file);
     if(!file) {
         return res.status(400).json({ error: 'No file uploaded' });
     } 
     try {
-        await FileService.uploadFile(file);
+        await fileService.uploadFile(file);
         res.json({ message: 'File uploaded and converted to .docx' });
     } catch(error) {
         console.error('Error processing file:', error);
