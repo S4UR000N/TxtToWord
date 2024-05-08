@@ -23,7 +23,6 @@ app.get('/api/search/:fileId', async(req, res) => {
     let id = req.params.fileId;
     try {
         const file = await fileService.searchFile(id);
-        const name = file.name;
         if(!file) {
             return res.status(404).json({ error: 'File not found' });
         }
