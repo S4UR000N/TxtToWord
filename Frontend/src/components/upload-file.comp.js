@@ -67,10 +67,14 @@ class UploadFileComponent extends HTMLElement {
                     color:  #61c0bf;
                 }
             }
+            .hidden {
+                display: none;
+            }
         </style>
         <div id="dropZone" class='container'> 
             <p>Drag and drop your .txt file</p>
-            <input class='btn' type="file" id="fileInput" accept="text/plain" />
+            <label class='btn' for="fileInput">Upload a file.</label>
+            <input type="file" id="fileInput" accept="text/plain" class="hidden" />
         </div>
         `;
     }
@@ -131,11 +135,12 @@ class UploadFileComponent extends HTMLElement {
                     body: formData
                 })
                 .then(res => {
-                    console.log("fetch success");
                     console.log(res);
+                    console.log("upload success");
                 })
                 .catch(err => {
                     console.log(err);
+                    alert('Upload failed. Please try again.')
                 });
             }
         }
