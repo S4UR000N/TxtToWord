@@ -120,6 +120,7 @@ class DownloadFileComponent extends HTMLElement {
                 </div>
             </form>
             <div id="dwn-container" class="dwn-container hidden">
+                <span id="fileName">the file name.docx</span>
                 <button type="button" id="dwn">Download</button>
                 <button type="button" id="del">Delete</button>
             </div>
@@ -144,13 +145,17 @@ class DownloadFileComponent extends HTMLElement {
             searchBtn.setAttribute('disabled', true);
         }
     }
-    async handleSearch(e) {
-        // this.shadowRoot.getElementById('dwn-container').classList.toggle('hidden');
-        let res = await fetch('http://localhost:3000/api/search/' + this.shadowRoot.getElementById('searchInput').value);
-        let resData = await res.json();
-        console.log("Handle: Search");
-        console.log(resData);
-        console.log(resData.fileId);
+    
+    handleSearch(e) {
+        fetch('http://localhost:3000/api/search/' + this.shadowRoot.getElementById('searchInput').value)
+        .then(res => res.json().then(file => {
+            console.log(file);
+            this.shadowRoot.getElementById('fileName').innerText = file.name;
+            this.shadowRoot.getElementById('dwn-container').classList.toggle('hidden');
+        }))
+        .catch(_ => {
+            alert('Search failed. Please try again.')
+        });
     }
 
     handleDownload(e) {
