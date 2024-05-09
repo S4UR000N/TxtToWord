@@ -152,25 +152,43 @@ class DownloadFileComponent extends HTMLElement {
     }
     
     handleSearch(e) {
-        fetch('http://localhost:3000/api/search/' + this.shadowRoot.getElementById('searchInput').value)
-        .then(res => res.json().then(file => {
-            console.log(file);
-            this.fileId = file._id;
+        if (!this.fileId || this.fileId != this.shadowRoot.getElementById('searchInput').value) {
+           fetch('http://localhost:3000/api/search/' + this.shadowRoot.getElementById('searchInput').value)
+            .then(res => {
+                if (res.ok) {
+                    res.json().then(file => {
+                        console.log(file);
+                        this.fileId = file._id;
 
-            this.shadowRoot.getElementById('fileName').innerText = file.name;
-            this.shadowRoot.getElementById('dwnLink').setAttribute('href', `http://localhost:3000/api/download/${this.fileId}`)
-            this.shadowRoot.getElementById('dwn-container').classList.toggle('hidden');
-        }))
-        .catch(_ => {
-            alert('Search failed. Please try again.');
-        });
+                        this.shadowRoot.getElementById('fileName').innerText = file.name;
+                        this.shadowRoot.getElementById('dwnLink').setAttribute('href', `http://localhost:3000/api/download/${this.fileId}`)
+                        let dwnContainer = this.shadowRoot.getElementById('dwn-container');
+                        dwnContainer.classList.contains('hidden') && dwnContainer.classList.toggle('hidden');
+                    });
+                }
+                else if (res.status == 404) {
+                    alert('File not found.');
+                }
+                else {
+                    alert('Search failed. Please try again.');
+                }
+            })
+            .catch(_ => {
+                alert('Search failed. Please try again.');
+            }); 
+        }
+        else {
+            this.shadowRoot.getElementById('searchBtn').setAttribute('disabled', true);
+        }
+        
     }
 
     handleDelete(e) {
         fetch('http://localhost:3000/api/delete/' + this.fileId, {method: 'DELETE'})
         .then(res => {
             if (res.ok) {
-                alert('Delete Successful.')
+                this.shadowRoot.getElementById('dwn-container').classList.toggle('hidden');
+                alert('Delete Successful.');
             }
             else {
                 alert('Delete failed. Please try again.')
