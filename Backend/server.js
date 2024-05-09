@@ -20,61 +20,51 @@ app.use(express.static(path.join(__dirname, '../Frontend/dist')));
 
 app.get('/api/search/:fileId', async(req, res) => {
     let fileService = new FileService();
-    let id = req.params.fileId;
-    try {
-        const file = await fileService.searchFile(id);
-        if(!file) {
-            return res.status(404).json({ error: 'File not found' });
-        }
-        res.send(file);
-    } catch(error) {
-        res.status(500).json({ error: 'Error searching a file'});
-    }
-});
+    const id = req.params.fileId;
+    const response = await fileService.searchFile(id);
+    if(response.success) {
+        const file = response.data;
+        return res.send(file);
+    } 
+    return res.status(response.status).json({error: response.error});
 
-app.get('/api/download/:fileId', async (req, res) => {
-    let fileService = new FileService();
-    let id = req.params.fileId;
-    try {
-        const file = await fileService.searchFile(id);
-        if(!file) {
-            return res.status(404).json({ error: 'File not found' });
-        }
-        res.setHeader('Content-Disposition', `attachment; filename=${file.name}`);
-        res.setHeader('Content-Type', 'application/vnd.openxmlformats-office-document.wordprocessingml.document');
-        res.send(file.bytes);
-    } catch(error) {
-        console.error('Error downloading a file:', error);
-        res.status(500).json({ error: 'Error downloading a file' });
-    }
 });
 
 app.post('/api/upload', upload.single('file'), async (req, res) => {
     let fileService = new FileService();
-    let file = req.file;
-    if(!file) {
-        return res.status(400).json({ error: 'No file uploaded' });
+    const uploadedFile = req.file;
+    if(!uploadedFile) {
+        return res.status(400).json({error: 'No file uploaded'});
     } 
-    try {
-        let fileId = await fileService.uploadFile(file.originalname, file.buffer);
-        res.status(200).json({ message: 'File uploaded and converted to .docx', fileId: fileId });
-    } catch(error) {
-        res.status(500).json({ error: 'Error processing a file' });
-    }
+    const response = await fileService.uploadFile(uploadedFile.originalname, uploadedFile.buffer);
+    if(response.success) {
+        const file = response.data;
+        return res.send(file);
+    } 
+    return res.status(response.status).json({error: response.error});
+});
+
+app.get('/api/download/:fileId', async (req, res) => {
+    let fileService = new FileService();
+    const id = req.params.fileId;
+    const response = await fileService.downloadFile(id);
+    if(response.success) {
+        const file = response.data;
+        res.setHeader('Content-Disposition', `attachment; filename=${file.name}`);
+        res.setHeader('Content-Type', 'application/vnd.openxmlformats-office-document.wordprocessingml.document');
+        return res.send(file.bytes);
+    } 
+    return res.status(response.status).json({error: response.error});
 });
 
 app.delete('/api/delete/:fileId', async (req, res) => {
     let fileService = new FileService();
-    let id = req.params.fileId;
-    try {
-        const file = await fileService.deleteFile(id);
-        if(!file) {
-            return res.status(404).json({ error: 'File not found' });
-        }
-        res.status(200).send();
-    } catch(error) {
-        res.status(500).json({ error: 'Error while deleting a file' });
+    const id = req.params.fileId;
+    const response = await fileService.deleteFile(id);
+    if(response.success) {
+        return res.send();
     }
+    return res.status(response.status).json({error: response.error});
 });
 
 app.get('*', (req, res) => {
