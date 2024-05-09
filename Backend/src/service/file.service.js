@@ -51,7 +51,7 @@ class FileService {
 
     isIdValid(fileId) {
         let response = new ResponseModel();
-        if(fileId == 24) {
+        if(fileId.length == 24) {
             response.success = true;
             return response;
         } 
