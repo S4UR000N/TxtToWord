@@ -116,7 +116,7 @@ class DownloadFileComponent extends HTMLElement {
         </style>
 
         <div class="container">
-            <form class="search-container">
+            <form id="searchForm" class="search-container">
                 <label>Search file by ID</label>
                 <div class="search">
                     <input type="text" id="searchInput" />
@@ -136,6 +136,7 @@ class DownloadFileComponent extends HTMLElement {
 
     connectedCallback() {
         this.shadowRoot.getElementById('searchInput').addEventListener('input', (e) => this.handleSearchInput(e));
+        this.shadowRoot.getElementById('searchForm').addEventListener('keypress', (e) => (e.code == 'Enter') && this.handleSearch(e));
         this.shadowRoot.getElementById('searchBtn').addEventListener('click', (e) => this.handleSearch(e));
         this.shadowRoot.getElementById('del').addEventListener('click', (e) => this.handleDelete(e));
     }
@@ -151,7 +152,10 @@ class DownloadFileComponent extends HTMLElement {
         }
     }
     
-    handleSearch(e) {
+    handleSearch(e = false) {
+        if (e) {
+            e.preventDefault();
+        }
         if (!this.fileId || this.fileId != this.shadowRoot.getElementById('searchInput').value) {
            fetch('http://localhost:3000/api/search/' + this.shadowRoot.getElementById('searchInput').value)
             .then(res => {
