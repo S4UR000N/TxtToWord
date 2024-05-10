@@ -6,13 +6,18 @@ import ResponseModel from '../model/response/response.model.js';
 class FileService {
     fileRepository = new FileRepository();
 
+    async convertToDocx(htmlBuffer, fileName) {
+        const docxBuffer = await HTMLtoDOCX(htmlBuffer);
+        let fileModel = new FileModel();
+        fileModel.name = fileName.split('.')[0] + '.docx';
+        fileModel.bytes = docxBuffer;
+        return fileModel;
+    }
+
     async uploadFile(fileName, buffer) {
         try {
             const htmlData = buffer.toString();
-            const docxBuffer = await HTMLtoDOCX(htmlData);
-            let fileModel = new FileModel();
-            fileModel.name = fileName.split('.')[0] + '.docx';
-            fileModel.bytes = docxBuffer;
+            const fileModel = await this.convertToDocx(htmlData, fileName);
             const response = await this.fileRepository.createFile(fileModel);
             return response;
         } catch (error) {
