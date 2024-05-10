@@ -30,3 +30,25 @@ jspm_packages/
 .env.local
 
 .vscode-test
+
+Backend/coverage/
+__tests__/coverage/
+
+# Jest cache directory
+.cache/
+
+# Jest test result files
+*.test-results.xml
+
+# Jest snapshot files (if you're using snapshots)
+__snapshots__/
+
+# Jest debug logs
+jest-debug.log
+
+# Jest temporary files
+*.haste-map.json
+*.jest-cache
+
+# Other Jest related files (adjust as needed)
+jest.config.js

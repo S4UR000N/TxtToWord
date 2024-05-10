@@ -1,7 +1,8 @@
 class ResponseModel {
     success = false;
-    errors = [];
-    result = {};
+    status = 500;
+    data = {};
+    error = '';
 }
 
-module.exports = ResponseModel;
+export default ResponseModel;
