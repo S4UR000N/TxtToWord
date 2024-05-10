@@ -31,7 +31,7 @@ jspm_packages/
 
 .vscode-test
 
-coverage/
+Backend/coverage/
 __tests__/coverage/
 
 # Jest cache directory
