@@ -14,7 +14,7 @@ afterAll(done => {
 });
 
 // Replace this with a real ID from your database
-const fileId = '663e874f22ad1b57ae6d2cbf';
+const fileId = '663fa5c685f2630c9fc2bba0';
 let createdId = '';
 const invalidId = new ObjectId();
 
@@ -53,7 +53,7 @@ describe('POST /api/upload', () => {
 
         test('Should upload a file', async () => {
             const response = await request(app).post('/api/upload').attach('file', './src/assets/testFile.txt');
-            createdId = response.body.id;
+            createdId = response.body._id;
             expect(response.status).toBe(200);
         });
     });
