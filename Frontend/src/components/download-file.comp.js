@@ -79,6 +79,13 @@ class DownloadFileComponent extends HTMLElement {
                 background-color: #e3e3e3;
                 border: 2px solid #bbded6;
             }
+            #fileName {
+                font-size: 19px;
+            }
+            #hashTagFileId {
+                font-size: 13px;
+                color: #bfbfbf;
+            }
            
             @media (max-width: 525px) {
                 :host {
@@ -163,7 +170,7 @@ class DownloadFileComponent extends HTMLElement {
                     res.json().then(fileModel => {
                         this.fileId = fileModel._id;
 
-                        this.shadowRoot.getElementById('fileName').innerText = fileModel.name;
+                        this.shadowRoot.getElementById('fileName').innerHTML = `${fileModel.name} <span id="hashTagFileId">#${fileModel._id}<span>`;
                         this.shadowRoot.getElementById('dwnLink').setAttribute('href', `http://localhost:3000/api/download/${this.fileId}`)
                         let dwnContainer = this.shadowRoot.getElementById('dwn-container');
                         dwnContainer.classList.contains('hidden') && dwnContainer.classList.toggle('hidden');

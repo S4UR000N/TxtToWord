@@ -131,7 +131,7 @@ class UploadFileComponent extends HTMLElement {
                         downloadComponent.shadowRoot.getElementById('searchInput').value = fileModel._id;
                         downloadComponent.handleSearch();
         
-                        alert('File upload success.');
+                        alert(`File upload success.\nYour File ID: #${fileModel._id}`);
                     });
                 }
                 else {
