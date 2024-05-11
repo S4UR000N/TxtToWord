@@ -2,21 +2,31 @@ import request from "supertest";
 import mongoose from "mongoose";
 import app from "./app.js";
 import { ObjectId } from "mongodb";
+import FileRepository from "./src/repository/file.repository.js";
+import testBytesObject from "./src/assets/testBytesObject.js";
+import FileService from "./src/service/file.service.js";
+
+let fileId = '';
+let createdId = '';
+const invalidId = new ObjectId();
+
+async function setTestRecord() {
+    let fileService = new FileService();  
+    let testRecord = await fileService.uploadFile('testName.txt', testBytesObject);
+    fileId = testRecord.data._id;
+}
 
 beforeAll(done => {
+    setTestRecord();
     done();
 });
   
 afterAll(done => {
-// Close db connection
+    let fileRepository = new FileRepository();
+    fileRepository.deleteFile(fileId);
     mongoose.disconnect();
     done();
 });
-
-// Replace this with a real ID from your database
-const fileId = '663fa5c685f2630c9fc2bba0';
-let createdId = '';
-const invalidId = new ObjectId();
 
 describe('GET /api/search/:fileId', () => { 
 
