@@ -10,7 +10,6 @@ class BaseRepository {
             mongoose.connect(`mongodb://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}?authSource=admin`)
             .then(_ => {
                 BaseRepository.hasConnected = true;
-                logger.info('db connection success');
             })
             .catch(err => {
                 logger.error('db connection failed\n' + err);
