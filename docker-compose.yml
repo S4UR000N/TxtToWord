@@ -6,7 +6,46 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
+    ports: [3000:3000]
+    networks: [associated]
+    volumes: [log_data:/app/data/log]
+    depends_on: [mongo]
     environment:
-      NODE_ENV: production
-    ports:
-      - 3000:3000
+      NODE_ENV: development
+      DB_USERNAME: root
+      DB_PASSWORD: toor
+      DB_HOST: mongo
+      DB_PORT: 27017
+      DB_NAME: filedb
+      USE_CONTAINER: true
+
+  mongo:
+    image: mongo
+    restart: always
+    ports: [27017:27017]
+    networks: [associated]
+    volumes: [mongo_data:/app/data/db]
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: toor
+      MONGO_DATA_DIR: /app/data/db
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports: [8081:8081]
+    networks: [associated]
+    depends_on: [mongo]
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: toor
+      ME_CONFIG_MONGODB_URL: mongodb://root:toor@mongo:27017/
+      ME_CONFIG_BASICAUTH: false
+
+networks:
+  associated:
+    name: associated
+
+volumes:
+  log_data:
+  mongo_data:

@@ -13,7 +13,7 @@ class FileRepository extends BaseRepository {
         try {
             const file = await this.collection.create(fileModel);
             response.success = true;
-            response.data = {name: file.name, _id: file._id};
+            response.data = file;
             return response;
         } catch (error) {
             logger.error('File creation failed' + error);

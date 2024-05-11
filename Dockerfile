@@ -1,12 +1,10 @@
 FROM node:lts-alpine
-ENV NODE_ENV=production
+ENV NODE_ENV=development
 WORKDIR /app
-COPY Frontend/package.json Frontend/
-COPY Backend/package.json Backend/
+COPY . .
+RUN npm install -g webpack webpack-cli
 RUN cd Frontend && npm install && cd .. 
 RUN cd Backend && npm install && cd ..
-COPY . .
+RUN cd Frontend && npm run build:dev && cd .. 
 EXPOSE 3000
-RUN chown -R node /app
-USER node
 CMD ["node", "Backend/server.js"]

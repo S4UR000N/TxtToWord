@@ -84,27 +84,6 @@ class UploadFileComponent extends HTMLElement {
         `;
     }
 
-    enableFileDragAndDrop() {
-        const hostElement = this.shadowRoot.host;
-    
-        hostElement.addEventListener('dragover', (event) => {
-          event.preventDefault();
-        });
-    
-        hostElement.addEventListener('drop', (event) => {
-          event.preventDefault();
-          
-          const files = event.dataTransfer.files;
-    
-          if (files.length === 1) {
-            const file = files[0];
-            console.log('Dropped file:', file);
-          } else {
-            console.log('Please drop only one file');
-          }
-        });
-      }
-    
     connectedCallback() {
         window.addEventListener('dragover', (e) => e.preventDefault());
         window.addEventListener('drop', (e) => e.preventDefault());
@@ -131,7 +110,6 @@ class UploadFileComponent extends HTMLElement {
     }
 
     handleUpload(file) {
-        console.log(file);
         if (file.type !== 'text/plain') {
             alert('The file must be text/plain');
         }
@@ -145,16 +123,23 @@ class UploadFileComponent extends HTMLElement {
                 method: 'POST',
                 body: formData
             })
-            .then(res => res.json().then(data => {
-                console.log(data);
-                let downloadComponent = document.querySelector('download-component');
-                downloadComponent.shadowRoot.getElementById('searchInput').value = data.fileId;
-                downloadComponent.handleSearch();
-
-                alert(`${data.message}`);
-            }))
+            .then(res =>
+            {
+                if (res.ok) {
+                    res.json().then(fileModel => {
+                        let downloadComponent = document.querySelector('download-component');
+                        downloadComponent.shadowRoot.getElementById('searchInput').value = fileModel._id;
+                        downloadComponent.handleSearch();
+        
+                        alert('File upload success.');
+                    });
+                }
+                else {
+                    alert('Upload failed. Please try again.');
+                }
+            })
             .catch(_ => {
-                alert('Upload failed. Please try again.')
+                alert('Upload failed. Please try again.');
             });
         }
     }
