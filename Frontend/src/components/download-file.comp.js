@@ -160,11 +160,10 @@ class DownloadFileComponent extends HTMLElement {
            fetch('http://localhost:3000/api/search/' + this.shadowRoot.getElementById('searchInput').value)
             .then(res => {
                 if (res.ok) {
-                    res.json().then(file => {
-                        console.log(file);
-                        this.fileId = file._id;
+                    res.json().then(fileModel => {
+                        this.fileId = fileModel._id;
 
-                        this.shadowRoot.getElementById('fileName').innerText = file.name;
+                        this.shadowRoot.getElementById('fileName').innerText = fileModel.name;
                         this.shadowRoot.getElementById('dwnLink').setAttribute('href', `http://localhost:3000/api/download/${this.fileId}`)
                         let dwnContainer = this.shadowRoot.getElementById('dwn-container');
                         dwnContainer.classList.contains('hidden') && dwnContainer.classList.toggle('hidden');

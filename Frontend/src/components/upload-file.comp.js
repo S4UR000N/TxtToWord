@@ -123,14 +123,21 @@ class UploadFileComponent extends HTMLElement {
                 method: 'POST',
                 body: formData
             })
-            .then(res => res.json().then(data => {
-                console.log(data);
-                let downloadComponent = document.querySelector('download-component');
-                downloadComponent.shadowRoot.getElementById('searchInput').value = data.fileId;
-                downloadComponent.handleSearch();
-
-                alert(`${data.message}`);
-            }))
+            .then(res =>
+            {
+                if (res.ok) {
+                    res.json().then(fileModel => {
+                        let downloadComponent = document.querySelector('download-component');
+                        downloadComponent.shadowRoot.getElementById('searchInput').value = fileModel._id;
+                        downloadComponent.handleSearch();
+        
+                        alert('File upload success.');
+                    });
+                }
+                else {
+                    alert('Upload failed. Please try again.');
+                }
+            })
             .catch(_ => {
                 alert('Upload failed. Please try again.');
             });

@@ -17,6 +17,7 @@ services:
       DB_HOST: mongo
       DB_PORT: 27017
       DB_NAME: filedb
+      USE_CONTAINER: true
 
   mongo:
     image: mongo
