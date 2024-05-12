@@ -11,7 +11,7 @@ If you are just viewing the project, for simplicity  we recommend a docker setup
 ## Installation using docker
 
 ```git
-git pull git@github.com:S4UR000N/TxtToWord.git
+git clone https://github.com/S4UR000N/TxtToWord.git
 ```
 
 ## Usage
