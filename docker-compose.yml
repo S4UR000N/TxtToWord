@@ -17,7 +17,7 @@ services:
       DB_HOST: mongo
       DB_PORT: 27017
       DB_NAME: filedb
-      USE_CONTAINER: true
+      DB_LOG: './data/log/data.log'
 
   mongo:
     image: mongo
@@ -29,6 +29,7 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: toor
       MONGO_DATA_DIR: /app/data/db
+      HOME: /app/data/db
 
   mongo-express:
     image: mongo-express

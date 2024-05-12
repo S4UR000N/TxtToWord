@@ -139,6 +139,7 @@ class UploadFileComponent extends HTMLElement {
                 }
             })
             .catch(_ => {
+                this.shadowRoot.getElementById('fileInput').value = ""; 
                 alert('Upload failed. Please try again.');
             });
         }

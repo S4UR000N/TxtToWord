@@ -22,7 +22,13 @@ module.exports = function(config) {
             }
         },
         reporters: ['progress'], 
-        browsers: ['Chrome'], 
+        browsers: ['Chrome', 'Chromium'],
+        customLaunchers: {
+            Chromium: {
+                base: 'ChromeHeadless',
+                flags: ['--no-sandbox']
+            }
+        },
         singleRun: true 
     });
 };
