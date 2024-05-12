@@ -1,7 +1,9 @@
 class DownloadFileComponent extends HTMLElement {
+    fileId;
+
     constructor() {
-        fileId = '';
         super();
+        this.fileId = '';
 
         this.attachShadow({ mode: 'open' });
 
@@ -210,4 +212,8 @@ class DownloadFileComponent extends HTMLElement {
     }
 }
 
-customElements.define('download-component', DownloadFileComponent);
+const downloadFileComponentDefinition = customElements.define('download-component', DownloadFileComponent);
+export {
+    DownloadFileComponent,
+    downloadFileComponentDefinition
+} 
