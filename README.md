@@ -1,11 +1,52 @@
+# TxtToWord
+
+TxtToWord is a Node.js and Web Components solution for converting .txt to .docx and persisting the word file in a MongoDB.
+
 ## Installation
 
-1. Clone the repository.
-2. Navigate to the Frontend and run `npm install` to install dependencies and `npm run build` to bundle application.
-3. Navigate to the Backend and run `npm install` to install dependencies.
+There are two ways to run the project, via Node.js runtime or via docker.
+
+If you are just viewing the project, for simplicity  we recommend a docker setup.
+
+## Installation using docker
+
+```git
+git pull git@github.com:S4UR000N/TxtToWord.git
+```
 
 ## Usage
 
-- In Backend
-- Run `npm start` to start the server.
-- Open `http://localhost:3000` in your web browser.
+```docker
+docker compose up
+```
+## Testing
+
+### Open shell
+
+First you need to get the Id or Name of the container and copy it:
+
+```docker
+docker ps
+```
+###### the id should resemble: 920aa9288d8b
+###### the name should resemble: txttoword-backend-1
+
+Copied id or name from the previous step put instead of ```<Id/Name>```
+
+
+```docker
+docker exec -it <Id/Name> sh
+```
+
+To test the backend:
+
+```
+cd Backend
+npm test
+```
+
+To test the frontend:
+```
+cd Frontend
+npm test
+```
