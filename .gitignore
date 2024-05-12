@@ -49,6 +49,4 @@ jest-debug.log
 # Jest temporary files
 *.haste-map.json
 *.jest-cache
-
-# Other Jest related files (adjust as needed)
-jest.config.js
+/Frontend/coverage
