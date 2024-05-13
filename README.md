@@ -22,7 +22,7 @@ docker compose up
 
 ## Access
 
-It is all setup now and you can go to [localhost:3000](localhost:3000)
+It is all setup now and you can go to <a href="http://localhost:3000/" target="_blank">localhost:3000</a>
 
 ## Testing
 
