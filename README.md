@@ -19,6 +19,11 @@ git clone https://github.com/S4UR000N/TxtToWord.git
 ```docker
 docker compose up
 ```
+
+## Access
+
+It is all setup now and you can go to [localhost:3000](localhost:3000)
+
 ## Testing
 
 ### Open shell
